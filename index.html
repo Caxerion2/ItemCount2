@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itemcount</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/loader.css">
+    <link rel="shortcut icon" type="image/png" href="../photogif/yoyo-removebg-preview.png">
+    <script src="../js/loading.js"></script>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Kanit", sans-serif; 
+}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+    font-family: Playwrite GB S, sans-serif;
+    background-color: #efefef;
+    background-position: center;
+    color: white;
+}
+.popup {
+    position: fixed;
+    top: -100vh;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    transition: top 0ms ease-in-out 300ms;
+}
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 100ms ease-in-out 200ms;
+}
+.popup .popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.15);
+    width: 95%;
+    max-width: 350px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 23px;
+    opacity: 0;
+    box-shadow: 0px 2px 2px 5px rgba(0,0,0,0.5);
+    transition: all 300ms ease-in-out;
+}
+.popup .popup-content h2 {
+    margin: 10px 0px;
+    font-size: 25px;
+    color: #111;
+    text-align: center;
+
+}
+.popup .popup-content p {
+    margin: 15px 0px;
+    color: #222;
+    font-size: 16px;
+    text-align: center;
+}
+.popup .popup-content .controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0px 0px;
+}
+.popup .popup-content .controls button {
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.popup .popup-content .controls .close-btn {
+    background-color: transparent;
+    color: #3284ed;
+}
+.popup .popup-content .controls .download-btn {
+    background: #3284ed;
+    color: #ffffff;
+}
+.popup.active{
+    top: 0px;
+    transition: top 0ms ease-in-out 0ms;
+}
+.popup.popup.active .overlay {
+    opacity: 1;
+    transition: all 300ms ease-in-out;
+}
+.popup.active .popup-content {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+.navbar-links {
+    display: none;
+}
+.navbar-links.active {
+    display: block;
+}
+  
+nav {
+    width: 100%;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: Playwrite GB S, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 25px;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+.IC {
+    font-family: "Kanit", sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    background: linear-gradient(45deg,#3e3e3e, #cecdcd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+    margin-right: 100px;
+    list-style: none;
+    text-decoration: none;
+}
+.IC li {
+    margin-left: 20px;
+    margin-right: 5px;
+}
+.IC li a {
+    text-decoration: none;
+    color: #afafaf;
+}
+  .menu {
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    margin-left: 30px;
+    padding-right: 200px;
+    list-style: none;
+  }
+  .menu a:hover::after {
+    transform: scaleX(1);
+  }
+  .menu li {
+    margin-left: 25px;
+    margin-right: 5px;
+  }
+.menu li a {
+    font-size: 19px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.32s ease;
+}
+.menu li a:hover {
+    color: rgb(112, 118, 122);
+}
+.down-btn{
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px;
+    color: #fff;
+    background-image: linear-gradient(45deg, #2c2c2c, #d8d8d8);
+    font-size: 14px;
+    border-radius: 30px;
+    border-top-right-radius: 0;
+    transition: transform 0.3s;
+}
+.down-btn:hover{
+    transform: scale(1.1);
+    animation: pulse .5s infinite;
+}
+.login {
+    display: flex;
+    margin-right: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #afafaf;
+    transition: all 0.32s ease;
+    
+}
+.login:hover{
+    transform: scale(1.1);
+    animation: pulse .5s infinite;
+}
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 2;
+    }
+}
+.content{
+    margin-top: 18%;
+    margin-bottom: 11%;
+    max-width: 600px;
+    margin-left: 225px;
+}
+.content h1{
+    font-size: 70px;
+    color: #141313;
+}
+.content h2{
+    font-size: 70px;
+    background: linear-gradient(45deg,#3e3e3e, #cecdcd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.content p{
+    margin: 10px 0 30px;
+    color: #141313;
+}
+.strike-btn{
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 50px;
+    margin-left: -6px;
+    margin-top: -10px;
+    color: #ffffff;
+    background-image: linear-gradient(45deg, #2c2c2c, #807f7f);
+    font-size: 20px;
+    border-radius: 30px;
+    transition: transform 0.3s;
+    /* border-top-right-radius: 0; */
+}
+.strike-btn:hover{
+    transform: scale(1.1);
+    animation: pulse .5s infinite;
+}
+.container {
+    background-color: #1a1a19;
+    background-size: cover;
+    margin-top: 160px;
+    max-width: 2000px;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: "Playwrite GB S", cursive;
+    display: flex;
+}
+.box div{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: 6px solid rgba(255, 255, 255, 0.8);
+}
+.box div:nth-child(1){
+    top: 12%;
+    left: 20%;
+    animation: animate 9s linear infinite;
+}
+.box div:nth-child(2){
+    top: 70%;
+    left: 100%;
+    animation: animate 7s linear infinite;
+}
+.box div:nth-child(3){
+    top: 17%;
+    left: 80%;
+    animation: animate 5s linear infinite;
+}
+.box div:nth-child(4){
+    top: 65%;
+    margin-left: 10%;
+    animation: animate 9s linear infinite;
+}
+.box2 div {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    border: 6px solid rgb(255, 255, 255);
+}
+.box2 div:nth-child(1){
+    top: 12%;
+    left: 400%;
+    animation: animate 9s linear infinite;
+}
+.box2 div:nth-child(2){
+    top: 80%;
+    left: 400%;
+    animation: animate 7s linear infinite;
+}
+.box2 div:nth-child(3){
+    top: 17%;
+    left: -80%;
+    animation: animate 12s linear infinite;
+}
+.box2 div:nth-child(4){
+    top: 65%;
+    margin-left: 10%;
+    animation: animate 7s linear infinite;
+}
+.box2 div:nth-child(5){
+    top: 25%;
+    left: 400%;
+    animation: animate 8s linear infinite;
+}
+.box2 div:nth-child(6){
+    top: -40%;
+    margin-left: 10%;
+    animation: animate 6s linear infinite;
+}
+.box2 div:nth-child(7){
+    top: 25%;
+    left: 700px;
+    animation: animate 10s linear infinite;
+}
+.box2 div:nth-child(8){
+    top: -25%;
+    left: 700px;
+    animation: animate 4s linear infinite;
+}
+.box2 div:nth-child(9){
+    top: -55%;
+    left: 600px;
+    animation: animate 9s linear infinite;
+}
+@keyframes  animate{
+    0%{
+        transform: scale(0) translateY(0) rotate(0);
+        opacity: 1;
+    }
+    100%{
+        transform: scale(1.3) translateY(-90px) rotate(360deg);
+    }
+}
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 2;
+    }
+}
+.IC-logo {
+    margin-bottom: 20px;
+    margin-top: 125px;
+    margin-left: 40px;
+    animation: fadeIn 2s;
+}
+.tambahan {
+    background-size: 100px;
+    margin-top: 175px;
+    padding-bottom: 200px;
+    margin-left: 100px;
+    font-size: 20px;
+    animation: fadeIn 2s;
+}
+.tambahan h3{
+    font-size: 35px;
+}
+button {
+    position: relative;
+    top: 30px;
+    transform: translate(-50% -50%);
+}
+button {
+    background: none;
+    color: #ffffff;
+    width: 240px;
+    height: 50px;
+    border: 1px solid #ffffff;
+    font-size: 18px;
+    font-family: "Mulish", sans-serif;
+    border-radius: 4px;
+    transition: .6s;
+    overflow: hidden;
+}
+button:focus {
+    outline: none;
+}
+button:before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, .5);
+    width: 60px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: .5s;
+    filter: blur(30px);
+    transform: translateX(-130px) skewX(-15deg);
+}
+button:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(255, 255, 255, .2);
+    width: 30px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    opacity: 0;
+    filter: blur(30px);
+    transform: translate(-100px) scaleX(-15deg);
+}
+button:hover {
+    background: #000000;
+    cursor: pointer;
+}
+button:hover:before {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: .6;
+    transition: .7s;
+}
+button:hover:after {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: 1;
+    transition: .7s;
+}
+.content2{
+    background-color: #060606;
+    padding-bottom: 100px;
+}
+.TheEnd h1{
+    font-size: 50px;
+    text-transform: uppercase;
+    font-family: "Mulish", sans-serif;
+    letter-spacing: 4px;
+    color: #b9b9b9;
+    margin-left: 634px;
+}
+.hor {
+    width: 80%;
+    height: 7px;
+    border: 0 none;
+    margin-right: -10px;
+    margin-left: 150px;
+    margin-top: 10px;
+    margin-bottom: 90px;
+    background-color: rgb(255, 255, 255);
+}
+.whatcha {
+    margin-top: 50px;
+    padding-bottom: 20%;
+    max-width: 600px;
+    margin-left: 520px;
+    animation: fadeIn 2s;
+}
+.whatcha h4{
+    font-size: 45px;
+    color: #c6c6c6;
+    margin-left: -30px;
+}
+.whatcha p{
+    margin-right: 10px;
+    margin-left: -30px;
+    padding-bottom: -10%;
+    color: #c6c6c6;
+    font-size: 18px;
+}
+.whatcha button {
+    margin: 10px;
+    left: -40px;
+    top: 80px;
+}
+.whatcha button:focus {
+    outline: none;
+}
+.whatcha button:before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(159, 120, 120, 0.5);
+    width: 60px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: .5s;
+    filter: blur(30px);
+    transform: translateX(-130px) skewX(-15deg);
+}
+.whatcha button:after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: rgba(170, 12, 12, 0.2);
+    width: 30px;
+    height: 100%;
+    left: 30px;
+    top: 0;
+    opacity: 0;
+    filter: blur(30px);
+    transform: translate(-100px) scaleX(-15deg);
+}
+.whatcha button:hover {
+    background: #ece8e8;
+    color: #060606;
+    cursor: pointer;
+}
+.whatcha button:hover:before {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: .6;
+    transition: .7s;
+}
+.watcha button:hover:after {
+    transform: translateX(300px) skewX(-15deg);
+    opacity: 1;
+    transition: .7s;
+}
+footer {
+    background: none;
+    margin-top: 100px;
+    padding: 10px 13px;
+    color: #fff;
+    text-align: center;
+}
+</style>
+<script>
+    window.addEventListener("load", () => {
+    const loader = document.querySelector(".loader");
+
+    loader.classList.add("loader-hidden");
+
+    loader.addEventListener("transitioned", () => {
+        document.body.removeChild("loader");
+    })
+})
+</script>
+<body>
+    <!-- <script src="../js/starting.js"></script>
+    <div class="popup" id="popup">
+        <div class="overlay"></div>
+        <div class="popup-content">
+            <h2>Download the latest version</h2>
+            <p>We also made an app to make it more effecient
+                so wanna download it?
+            </p>
+            <div class="controls">
+                <button class="close-btn">Yes please</button>
+                <button class="download-btn">hmmm?</button>
+            </div>
+        </div>
+    </div>     -->
+    <header>
+        <nav>
+            <div>
+                <ul class="IC">
+                    <li><a href="#">ItemCount</a></li>
+                </ul>
+    
+            </div>
+                <ul class="menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="azref.html">"ASK AZREF"</a></li>
+                    <li><a href="howitworks.html">How it works?</a></li>
+                    <li><a href="#Contact">Privacy</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <div class="log">
+                    <a href="#" class="login">Log In</a>
+                </div>
+            <div class="center">
+                <a href="download.html" class="down-btn">Download instead</a>
+            </div>
+        </nav>
+        </header>
+        <div class="loader"></div>
+        <section id="konten">
+        <div class="content">
+            <h1>Welcome to</h1>
+            <h2>ItemCount</h2>
+            <p>ItemCount is a new calculator platform to measure and count the number
+            values of item you had, what you waiting for, lets explore this
+            amazing feature starting by clicking this button below </p>
+            <a href="#contain" class="strike-btn">Continue</a>
+        </div>
+    </section>
+        <section id="contain">
+        <div class="container">
+            <div class="box">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="IC-logo">
+                <img src="../photogif/yoyo-removebg-preview.png">
+            </div>
+            <div class="box2">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="tambahan">
+                <h3>"What Is ItemCount?"</h3>
+                <p>ItemCount is a Semi-trading and calculator web with with a variety features including an AI that made to assist you in trading. 
+                    These include your signed item's value and a calculator, with AMCFD (Advanced Multiple Calculation Feature and Detector)
+                    that helps you to prevent any scams, "AZREF" will guide you if you're new here, with a variety commands, such as: 
+                    Anti-Crash, Dynamic Command, Permission Handler etc. this AI has a good memories
+                    that will make more easier to learn about trading, we ensure your dissatisfaction.
+                    Thanks for reading this and enjoy your stay here! :)
+                </p>
+                <div>
+                    <button type="button" onclick="location.href='brainrot.html'">Start Counting</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <div class="content2">
+    <div class="TheEnd">
+        <h1>The End</h1>
+    </div>
+    <hr class="hor">
+    <div class="whatcha">
+        <h4>Whatcha gonna do next?</h4>
+        <p>You've reached the bottom of this page, now pick your own path</p>
+        <button type="button" onclick="location.href='brainrot.html'">Calculator</button>
+        <button type="button" onclick="location.href='brainrot.html'">Trading</button>
+    </div>
+    <footer>
+        &copy; 2024 ItemCount Connected, All rights reserved
+        All other trademarks belong to their respective owners.
+    </footer>
+</div>
+</body>
+</html>
